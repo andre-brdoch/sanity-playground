@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ReactInspector from 'react-inspector';
+import ReactInspector from 'react-json-inspector';
 import styles from '@sanity/desk-tool/lib/panes/documentPane/inspectDialog/inspectDialog.css';
 
 class Inspector extends React.Component {

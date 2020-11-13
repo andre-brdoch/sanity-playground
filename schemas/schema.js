@@ -17,5 +17,11 @@ export default createSchema({
       title: 'Article',
       fields: [{ type: 'string', name: 'title' }],
     },
+    {
+      type: 'document',
+      name: 'category',
+      title: 'Category',
+      fields: [{ type: 'string', name: 'kind' }],
+    },
   ]),
 });
