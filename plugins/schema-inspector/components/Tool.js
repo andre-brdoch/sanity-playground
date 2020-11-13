@@ -47,6 +47,12 @@ class Tool extends React.Component {
 
 Tool.propTypes = {
   title: PropTypes.string,
+  router: PropTypes.shape({
+    state: PropTypes.shape({
+      schemaType: PropTypes.string,
+      schemaName: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 Tool.defaultProps = {
