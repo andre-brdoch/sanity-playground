@@ -9,7 +9,9 @@
   "scripts": {
     "start": "sanity start",
     "test": "sanity check",
-    "build": "sanity build"
+    "build": "sanity build",
+    "lint": "eslint . --ext .js",
+    "lint:fix": "eslint . --ext .js --fix"
   },
   "keywords": [
     "sanity"
