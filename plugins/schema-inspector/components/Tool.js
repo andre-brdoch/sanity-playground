@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
+import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
 import schema from 'part:@sanity/base/schema';
 import Inspector from './Inspector';
 import styles from './Tool.css';
@@ -12,6 +13,8 @@ const getSchema = ({ schemaType, schemaName }) => docSchemas.filter((s) => s.nam
 console.log(docSchemas);
 
 class Tool extends React.Component {
+  closeDialog = () => this.props.router.navigate({});
+
   renderHeader = () => (
     <header className={styles.header}>
       <h1 className={styles.title}>{this.props.title}</h1>
@@ -39,7 +42,11 @@ class Tool extends React.Component {
         <main>
           {docSchemas?.length > 0 && this.renderLinks()}
 
-          {schemaType && schemaName && <Inspector schema={getSchema({ schemaType, schemaName })} />}
+          {schemaType && schemaName && (
+            <FullScreenDialog title={schemaName} onClose={this.closeDialog}>
+              <Inspector schema={getSchema({ schemaType, schemaName })} />
+            </FullScreenDialog>
+          )}
         </main>
       </div>
     );
@@ -49,6 +56,7 @@ class Tool extends React.Component {
 Tool.propTypes = {
   title: PropTypes.string,
   router: PropTypes.shape({
+    navigate: PropTypes.func,
     state: PropTypes.shape({
       schemaType: PropTypes.string,
       schemaName: PropTypes.string,
