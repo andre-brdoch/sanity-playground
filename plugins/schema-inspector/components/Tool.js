@@ -1,12 +1,13 @@
-/* eslint-disable react/prefer-stateless-function */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import schema from 'part:@sanity/base/schema';
+import Inspector from './Inspector';
 import styles from './Tool.css';
 
 const docSchemas = schema._source.types;
+
+const getSchema = ({ schemaType, schemaName }) => docSchemas.filter((s) => s.name === schemaName)?.[0];
 
 console.log(docSchemas);
 
@@ -38,7 +39,7 @@ class Tool extends React.Component {
         <main>
           {docSchemas?.length > 0 && this.renderLinks()}
 
-          {schemaType && <h2>{schemaType}</h2>}
+          {schemaType && schemaName && <Inspector schema={getSchema({ schemaType, schemaName })} />}
         </main>
       </div>
     );
