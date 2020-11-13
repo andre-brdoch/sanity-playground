@@ -13,7 +13,8 @@ export default createSchema({
   types: schemaTypes.concat([
     {
       type: 'document',
-      name: 'articles',
+      name: 'article',
+      title: 'Article',
       fields: [{ type: 'string', name: 'title' }],
     },
   ]),
