@@ -1,141 +1,56 @@
+/* eslint-disable react/prefer-stateless-function */
+
 import React from 'react';
-import { StateLink, withRouterHOC, IntentLink } from 'part:@sanity/base/router';
-import Spinner from 'part:@sanity/components/loading/spinner';
-import Preview from 'part:@sanity/base/preview';
-import client from 'part:@sanity/base/client';
+import PropTypes from 'prop-types';
+import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import schema from 'part:@sanity/base/schema';
 import styles from './Tool.css';
 
-function getDocumentTypeNames() {
-  return schema
-    .getTypeNames()
-    .map((typeName) => schema.get(typeName))
-    .filter((type) => type.type && type.type.name === 'document')
-    .map((type) => type.name);
-}
+const docSchemas = schema._source.types;
 
-class MyTool extends React.Component {
-  state = {};
+console.log(docSchemas);
 
-  observables = {};
+class Tool extends React.Component {
+  renderHeader = () => (
+    <header className={styles.header}>
+      <h1 className={styles.title}>{this.props.title}</h1>
+    </header>
+  );
 
-  handleReceiveList = (documents) => {
-    this.setState({ documents });
-  };
-
-  handleReceiveDocument = (document) => {
-    this.setState({ document });
-  };
-
-  componentWillMount() {
-    // Fetch 50 last updated, published documents
-    this.observables.list = client.observable
-      .fetch(
-        '*[!(_id in path("drafts.**")) && _type in $types][0...50] | order (_updatedAt desc)',
-        { types: getDocumentTypeNames() },
-      )
-      .subscribe(this.handleReceiveList);
-
-    // If we have a document ID as part of our route, load that document as well
-    const documentId = this.props.router.state.selectedDocumentId;
-    if (documentId) {
-      this.fetchDocument(documentId);
-    }
-  }
-
-  fetchDocument(documentId) {
-    // If we're already fetching a document, make sure to cancel that request
-    if (this.observables.document) {
-      this.observables.document.unsubscribe();
-    }
-
-    this.observables.document = client.observable
-      .getDocument(documentId)
-      .subscribe(this.handleReceiveDocument);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const current = this.props.router.state.selectedDocumentId;
-    const next = nextProps.router.state.selectedDocumentId;
-
-    if (current !== next) {
-      this.fetchDocument(next);
-    }
-  }
-
-  // When unmounting, cancel any ongoing requests
-  componentWillUnmount() {
-    Object.keys(this.observables).forEach((obs) => {
-      this.observables[obs].unsubscribe();
-    });
-  }
-
-  renderDocumentsList() {
-    const { documents } = this.state;
-    if (!documents) {
-      return (
-        <div className={styles.list}>
-          <Spinner message="Loading..." center />
-          }
-        </div>
-      );
-    }
-
-    return (
-      <ul className={styles.list}>
-        {documents.map((doc) => (
-          <li key={doc._id} className={styles.listItem}>
-            <StateLink state={{ selectedDocumentId: doc._id }}>
-              <Preview value={doc} type={schema.get(doc._type)} />
-            </StateLink>
+  renderLinks = () => (
+    <ul>
+      {docSchemas?.length > 0
+        && docSchemas.map((s) => (
+          <li key={s.name}>
+            <StateLink state={{ schemaType: s.type, schemaName: s.name }}>{s.name}</StateLink>
           </li>
         ))}
-      </ul>
-    );
-  }
-
-  renderDocumentView() {
-    const { document } = this.state;
-    if (!document) {
-      return (
-        <div className={styles.document}>
-          <Spinner message="Loading document..." center />
-          }
-        </div>
-      );
-    }
-
-    const { _id, _type } = document;
-    return (
-      <div className={styles.document}>
-        <h2>
-          {_id}
-          {' '}
-          -
-          {' '}
-          <IntentLink intent="edit" params={{ id: _id, type: _type }}>
-            Edit
-          </IntentLink>
-        </h2>
-
-        <pre>
-          <code>{JSON.stringify(document, null, 2)}</code>
-        </pre>
-      </div>
-    );
-  }
+    </ul>
+  );
 
   render() {
-    const { documents, document } = this.state;
-    const { selectedDocumentId } = this.props.router.state;
+    const { schemaType, schemaName } = this.props.router.state;
 
     return (
       <div className={styles.container}>
-        {this.renderDocumentsList()}
-        {selectedDocumentId && this.renderDocumentView()}
+        {this.renderHeader()}
+
+        <main>
+          {docSchemas?.length > 0 && this.renderLinks()}
+
+          {schemaType && <h2>{schemaType}</h2>}
+        </main>
       </div>
     );
   }
 }
 
-export default withRouterHOC(MyTool);
+Tool.propTypes = {
+  title: PropTypes.string,
+};
+
+Tool.defaultProps = {
+  title: 'Schema Inspector',
+};
+
+export default withRouterHOC(Tool);
