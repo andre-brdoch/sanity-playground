@@ -12,37 +12,30 @@ interface Props {
   router: object;
 }
 
-class Tool extends React.Component<Props> {
-  static defaultProps = {
-    title: 'Schema Inspector',
-  };
+const Tool = ({ title = 'Schema Inspector', router }: Props) => {
+  const { typeName } = router.state;
 
-  closeDialog = (): void => this.props.router.navigate({});
+  const closeDialog = (): void => router.navigate({});
 
-  render() {
-    const { title, router } = this.props;
-    const { typeName } = router.state;
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>{title}</h1>
+      </header>
 
-    return (
-      <div className={styles.container}>
-        <header className={styles.header}>
-          <h1 className={styles.title}>{title}</h1>
-        </header>
+      <main>
+        {groups.map((group: TypeGroupType) => (
+          <TypeGroup key={group.groupType} {...group} />
+        ))}
 
-        <main>
-          {groups.map((group: TypeGroupType) => (
-            <TypeGroup key={group.groupType} {...group} />
-          ))}
-
-          {typeName && (
-            <FullScreenDialog title={typeName} onClose={this.closeDialog}>
-              <Inspector type={getType(typeName)} />
-            </FullScreenDialog>
-          )}
-        </main>
-      </div>
-    );
-  }
-}
+        {typeName && (
+          <FullScreenDialog title={typeName} onClose={closeDialog}>
+            <Inspector type={getType(typeName)} />
+          </FullScreenDialog>
+        )}
+      </main>
+    </div>
+  );
+};
 
 export default withRouterHOC(Tool);
