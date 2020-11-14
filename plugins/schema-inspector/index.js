@@ -1,6 +1,6 @@
 import { route } from 'part:@sanity/base/router';
 import { BiBook } from 'react-icons/bi';
-import Tool from './components/Tool';
+import Tool from './components/Tool.tsx';
 
 const router = route('/', [route('/:typeName')]);
 

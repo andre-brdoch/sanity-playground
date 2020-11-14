@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
-import Inspector from './Inspector';
-import { groups, getType } from '../data';
+import Inspector from './Inspector.tsx';
+import { groups, getType } from '../data.ts';
 import styles from './Tool.css';
 
 class Tool extends React.Component {
-  closeDialog = () => this.props.router.navigate({});
+  closeDialog = (): void => this.props.router.navigate({});
 
   renderHeader = () => (
     <header className={styles.header}>
@@ -15,30 +15,31 @@ class Tool extends React.Component {
     </header>
   );
 
-  renderGroup = group => group.types?.length > 0 && (
-  <div>
-    <header>
-      <h2>{group.title}</h2>
-    </header>
-    <ul>
-      {group.types.map(s => (
-        <li key={s.name}>
-          {group.groupType === 'coreTypes' ? (
-            <a
-              href={`https://www.sanity.io/docs/${s.name}-type`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {s.name}
-            </a>
-          ) : (
-            <StateLink state={{ typeName: s.name }}>{s.name}</StateLink>
-          )}
-        </li>
-      ))}
-    </ul>
-  </div>
-  );
+  renderGroup = (group) =>
+    group.types?.length > 0 && (
+      <div>
+        <header>
+          <h2>{group.title}</h2>
+        </header>
+        <ul>
+          {group.types.map((s) => (
+            <li key={s.name}>
+              {group.groupType === 'coreTypes' ? (
+                <a
+                  href={`https://www.sanity.io/docs/${s.name}-type`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {s.name}
+                </a>
+              ) : (
+                <StateLink state={{ typeName: s.name }}>{s.name}</StateLink>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
 
   render() {
     const { typeName } = this.props.router.state;
@@ -48,7 +49,7 @@ class Tool extends React.Component {
         {this.renderHeader()}
 
         <main>
-          {groups.map(group => this.renderGroup(group))}
+          {groups.map((group) => this.renderGroup(group))}
 
           {typeName && (
             <FullScreenDialog title={typeName} onClose={this.closeDialog}>
