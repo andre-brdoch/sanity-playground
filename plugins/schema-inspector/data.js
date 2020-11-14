@@ -1,4 +1,5 @@
 import schema from 'part:@sanity/base/schema';
+import coreTypes from '@sanity/schema/lib/sanity/coreTypes';
 
 const schemas = schema._source.types;
 const docTypes = schemas.filter((s) => s.type === 'document');
@@ -14,6 +15,11 @@ export const groups = [
     type: 'customFieldTypes',
     title: 'Custom Field Types',
     schemas: customFieldTypes,
+  },
+  {
+    type: 'coreTypes',
+    title: 'Core Types',
+    schemas: coreTypes,
   },
 ];
 

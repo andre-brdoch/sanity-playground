@@ -23,7 +23,19 @@ class Tool extends React.Component {
     <ul>
       {group.schemas.map((s) => (
         <li key={s.name}>
-          <StateLink state={{ schemaType: group.type, schemaName: s.name }}>{s.name}</StateLink>
+          {group.type === 'coreTypes' ? (
+            <a
+              href={`https://www.sanity.io/docs/${s.name}-type`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {s.name}
+            </a>
+          ) : (
+            <StateLink state={{ schemaType: group.type, schemaName: s.name }}>
+              {s.name}
+            </StateLink>
+          )}
         </li>
       ))}
     </ul>
