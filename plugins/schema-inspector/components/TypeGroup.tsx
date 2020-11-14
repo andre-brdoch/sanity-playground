@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { StateLink } from 'part:@sanity/base/router';
 import { TypeType, TypeGroupType } from '../types';
 

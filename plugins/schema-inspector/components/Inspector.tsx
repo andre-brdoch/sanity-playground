@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import ReactInspector from 'react-json-inspector';
 import styles from '@sanity/desk-tool/lib/panes/documentPane/inspectDialog/inspectDialog.css';
 import { TypeType } from '../types';

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
 import Inspector from './Inspector';
