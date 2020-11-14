@@ -1,28 +1,28 @@
 import schema from 'part:@sanity/base/schema';
 import coreTypes from '@sanity/schema/lib/sanity/coreTypes';
 
-const schemas = schema._source.types;
-const docTypes = schemas.filter(s => s.type === 'document');
-const customFieldTypes = schemas.filter(s => !docTypes.includes(s));
+const { types } = schema._source;
+const docTypes = types.filter(s => s.type === 'document');
+const customFieldTypes = types.filter(s => !docTypes.includes(s));
 
 export const groups = [
   {
-    type: 'docTypes',
-    title: 'Documents',
-    schemas: docTypes,
+    groupType: 'docTypes',
+    title: 'Document Types',
+    types: docTypes,
   },
   {
-    type: 'customFieldTypes',
+    groupType: 'customFieldTypes',
     title: 'Custom Field Types',
-    schemas: customFieldTypes,
+    types: customFieldTypes,
   },
   {
-    type: 'coreTypes',
+    groupType: 'coreTypes',
     title: 'Core Types',
-    schemas: coreTypes,
+    types: coreTypes,
   },
 ];
 
-const allTypes = groups.reduce((acc, val) => acc.concat(val.schemas), []);
+const allTypes = groups.reduce((acc, val) => acc.concat(val.types), []);
 
-export const getSchema = typeName => allTypes.find(t => t.name === typeName);
+export const getType = name => allTypes.find(t => t.name === name);

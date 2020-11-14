@@ -4,21 +4,21 @@ import ReactInspector from 'react-json-inspector';
 import styles from '@sanity/desk-tool/lib/panes/documentPane/inspectDialog/inspectDialog.css';
 
 class Inspector extends React.Component {
-  render = () => this.props.schema && (
+  render = () => this.props.type && (
   <div className={styles.jsonInspectorContainer}>
-    <ReactInspector data={this.props.schema} isExpanded={() => true} />
+    <ReactInspector data={this.props.type} isExpanded={() => true} />
   </div>
   );
 }
 
 Inspector.propTypes = {
-  schema: PropTypes.shape({
+  type: PropTypes.shape({
     name: PropTypes.string,
   }),
 };
 
 Inspector.defaultProps = {
-  schema: null,
+  type: null,
 };
 
 export default Inspector;

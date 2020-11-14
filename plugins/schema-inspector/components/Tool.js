@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
 import Inspector from './Inspector';
-import { groups, getSchema } from '../data';
+import { groups, getType } from '../data';
 import styles from './Tool.css';
 
 class Tool extends React.Component {
@@ -15,15 +15,15 @@ class Tool extends React.Component {
     </header>
   );
 
-  renderGroup = group => group.schemas?.length > 0 && (
+  renderGroup = group => group.types?.length > 0 && (
   <div>
     <header>
       <h2>{group.title}</h2>
     </header>
     <ul>
-      {group.schemas.map(s => (
+      {group.types.map(s => (
         <li key={s.name}>
-          {group.type === 'coreTypes' ? (
+          {group.groupType === 'coreTypes' ? (
             <a
               href={`https://www.sanity.io/docs/${s.name}-type`}
               target="_blank"
@@ -52,7 +52,7 @@ class Tool extends React.Component {
 
           {typeName && (
             <FullScreenDialog title={typeName} onClose={this.closeDialog}>
-              <Inspector schema={getSchema(typeName)} />
+              <Inspector type={getType(typeName)} />
             </FullScreenDialog>
           )}
         </main>
