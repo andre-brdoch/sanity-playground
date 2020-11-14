@@ -1,10 +1,10 @@
-export type Type = {
+export interface TypeType {
   name: string;
   type: string;
-};
+}
 
-export type TypeGroup = {
+export interface TypeGroupType {
   groupType: 'docTypes' | 'customFieldTypes' | 'coreTypes';
   title: string;
-  types: Array<Type>;
-};
+  types: Array<TypeType>;
+}
