@@ -14,6 +14,13 @@ interface Props {
 
 const Tool = ({ title = 'Schema Inspector', router }: Props) => {
   const { typeName } = router.state;
+  const { useState, useEffect } = React;
+  const [selectedType, setSelectedType] = useState(getType(typeName));
+
+  useEffect((): void => {
+    const type = getType(typeName);
+    setSelectedType(getType(typeName));
+  }, [typeName]);
 
   const closeDialog = (): void => router.navigate({});
 
@@ -28,9 +35,9 @@ const Tool = ({ title = 'Schema Inspector', router }: Props) => {
           <TypeGroup key={group.groupType} {...group} />
         ))}
 
-        {typeName && (
+        {selectedType && (
           <FullScreenDialog title={typeName} onClose={closeDialog}>
-            <Inspector type={getType(typeName)} />
+            <Inspector type={selectedType} />
           </FullScreenDialog>
         )}
       </main>
