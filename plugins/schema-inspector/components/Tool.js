@@ -2,29 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
-import schema from 'part:@sanity/base/schema';
 import Inspector from './Inspector';
+import { groups, getSchema } from '../data';
 import styles from './Tool.css';
-
-const schemas = schema._source.types;
-const docTypes = schemas.filter((s) => s.type === 'document');
-const customFieldTypes = schemas.filter((s) => !docTypes.includes(s));
-const groups = [
-  {
-    type: 'docTypes',
-    title: 'Documents',
-    schemas: docTypes,
-  },
-  {
-    type: 'customFieldTypes',
-    title: 'Custom Field Types',
-    schemas: customFieldTypes,
-  },
-];
-
-const getSchema = ({ schemaType, schemaName }) => groups
-  .filter((group) => group.type === schemaType)
-  .map((group) => group.schemas.find((s) => s.name === schemaName))?.[0];
 
 class Tool extends React.Component {
   closeDialog = () => this.props.router.navigate({});
