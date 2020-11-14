@@ -1,39 +1,42 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, ReactNode } from 'react';
 import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
 import Inspector from './Inspector.tsx';
-import { groups, getType } from '../data.ts';
+import { groups, getType } from '../data';
+import { Type, TypeGroup } from '../types';
 import styles from './Tool.css';
 
-class Tool extends React.Component {
+type Props = {
+  title: string;
+  router: object;
+};
+
+class Tool extends React.Component<Props> {
+  static defaultProps = {
+    title: 'Schema Inspector',
+  };
+
   closeDialog = (): void => this.props.router.navigate({});
 
-  renderHeader = () => (
-    <header className={styles.header}>
-      <h1 className={styles.title}>{this.props.title}</h1>
-    </header>
-  );
-
-  renderGroup = (group) =>
+  renderGroup = (group: TypeGroup): React.ReactNode =>
     group.types?.length > 0 && (
       <div>
         <header>
           <h2>{group.title}</h2>
         </header>
         <ul>
-          {group.types.map((s) => (
-            <li key={s.name}>
+          {group.types.map((t: Type) => (
+            <li key={t.name}>
               {group.groupType === 'coreTypes' ? (
                 <a
-                  href={`https://www.sanity.io/docs/${s.name}-type`}
+                  href={`https://www.sanity.io/docs/${t.name}-type`}
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {s.name}
+                  {t.name}
                 </a>
               ) : (
-                <StateLink state={{ typeName: s.name }}>{s.name}</StateLink>
+                <StateLink state={{ typeName: t.name }}>{t.name}</StateLink>
               )}
             </li>
           ))}
@@ -46,10 +49,12 @@ class Tool extends React.Component {
 
     return (
       <div className={styles.container}>
-        {this.renderHeader()}
+        <header className={styles.header}>
+          <h1 className={styles.title}>{this.props.title}</h1>
+        </header>
 
         <main>
-          {groups.map((group) => this.renderGroup(group))}
+          {groups.map((group: TypeGroup) => this.renderGroup(group))}
 
           {typeName && (
             <FullScreenDialog title={typeName} onClose={this.closeDialog}>
@@ -61,19 +66,5 @@ class Tool extends React.Component {
     );
   }
 }
-
-Tool.propTypes = {
-  title: PropTypes.string,
-  router: PropTypes.shape({
-    navigate: PropTypes.func,
-    state: PropTypes.shape({
-      typeName: PropTypes.string,
-    }),
-  }).isRequired,
-};
-
-Tool.defaultProps = {
-  title: 'Schema Inspector',
-};
 
 export default withRouterHOC(Tool);
