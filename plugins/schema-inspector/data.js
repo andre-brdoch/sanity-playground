@@ -2,8 +2,8 @@ import schema from 'part:@sanity/base/schema';
 import coreTypes from '@sanity/schema/lib/sanity/coreTypes';
 
 const schemas = schema._source.types;
-const docTypes = schemas.filter((s) => s.type === 'document');
-const customFieldTypes = schemas.filter((s) => !docTypes.includes(s));
+const docTypes = schemas.filter(s => s.type === 'document');
+const customFieldTypes = schemas.filter(s => !docTypes.includes(s));
 
 export const groups = [
   {
@@ -23,6 +23,6 @@ export const groups = [
   },
 ];
 
-export const getSchema = ({ schemaType, schemaName }) => groups
-  .filter((group) => group.type === schemaType)
-  .map((group) => group.schemas.find((s) => s.name === schemaName))?.[0];
+const allTypes = groups.reduce((acc, val) => acc.concat(val.schemas), []);
+
+export const getSchema = typeName => allTypes.find(t => t.name === typeName);

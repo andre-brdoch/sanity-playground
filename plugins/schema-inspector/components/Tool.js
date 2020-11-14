@@ -15,13 +15,13 @@ class Tool extends React.Component {
     </header>
   );
 
-  renderGroup = (group) => group.schemas?.length > 0 && (
+  renderGroup = group => group.schemas?.length > 0 && (
   <div>
     <header>
       <h2>{group.title}</h2>
     </header>
     <ul>
-      {group.schemas.map((s) => (
+      {group.schemas.map(s => (
         <li key={s.name}>
           {group.type === 'coreTypes' ? (
             <a
@@ -32,9 +32,7 @@ class Tool extends React.Component {
               {s.name}
             </a>
           ) : (
-            <StateLink state={{ schemaType: group.type, schemaName: s.name }}>
-              {s.name}
-            </StateLink>
+            <StateLink state={{ typeName: s.name }}>{s.name}</StateLink>
           )}
         </li>
       ))}
@@ -43,18 +41,18 @@ class Tool extends React.Component {
   );
 
   render() {
-    const { schemaType, schemaName } = this.props.router.state;
+    const { typeName } = this.props.router.state;
 
     return (
       <div className={styles.container}>
         {this.renderHeader()}
 
         <main>
-          {groups.map((group) => this.renderGroup(group))}
+          {groups.map(group => this.renderGroup(group))}
 
-          {schemaType && schemaName && (
-            <FullScreenDialog title={schemaName} onClose={this.closeDialog}>
-              <Inspector schema={getSchema({ schemaType, schemaName })} />
+          {typeName && (
+            <FullScreenDialog title={typeName} onClose={this.closeDialog}>
+              <Inspector schema={getSchema(typeName)} />
             </FullScreenDialog>
           )}
         </main>
@@ -68,8 +66,7 @@ Tool.propTypes = {
   router: PropTypes.shape({
     navigate: PropTypes.func,
     state: PropTypes.shape({
-      schemaType: PropTypes.string,
-      schemaName: PropTypes.string,
+      typeName: PropTypes.string,
     }),
   }).isRequired,
 };
