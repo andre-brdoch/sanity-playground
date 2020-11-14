@@ -1574,7 +1574,7 @@
     path-exists "^3.0.0"
     promise-props-recursive "^1.0.0"
 
-"@sanity/schema@2.0.9":
+"@sanity/schema@2.0.9", "@sanity/schema@^2.0.9":
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/@sanity/schema/-/schema-2.0.9.tgz#314eac4f46b1d03ad76f63b833ead64394115fb8"
   integrity sha512-0hEOXLvFAEik7o8hT0zG8hSjSzrCaACiigJ//pGnCfbB4lcSVqbCSSaAJyYCcRTb1VcECzKMd8NVNR7o6W3jjA==
