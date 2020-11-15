@@ -7,7 +7,7 @@
     position: relative;
   }
 
-  @nest & .inspectorLink {
+  @nest & .link {
     color: var(--link-color);
     text-decoration: underline;
     cursor: pointer;
@@ -20,4 +20,12 @@
       color: var(--link-hover-color);
     }
   }
+}
+
+.linkIcon {
+  width: 12px;
+  position: absolute;
+  top: 0;
+  right: -2px;
+  transform: translateX(100%);
 }

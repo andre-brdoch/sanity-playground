@@ -63,4 +63,11 @@ export const groups: Array<TypeGroupType> = [
 
 const allTypes = groups.reduce((acc, val) => acc.concat(val.types), []);
 
-export const getType = (name: string): TypeType => allTypes.find((t: TypeType) => t.name === name);
+const getTypeFromList = (list: Array<TypeType>, name: string): TypeType =>
+  list.find((t: TypeType) => t.name === name);
+
+export const getType = (name: string): TypeType => getTypeFromList(allTypes, name);
+
+export const typeExists = (name: string): boolean => getType(name) != null;
+
+export const isCoreType = (name: string): boolean => getTypeFromList(coreTypes, name) != null;

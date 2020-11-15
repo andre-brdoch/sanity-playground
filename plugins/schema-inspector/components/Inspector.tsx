@@ -1,32 +1,29 @@
 import * as React from 'react';
 import ReactInspector from 'react-json-inspector';
+import { MdOpenInNew } from 'react-icons/md';
+import TypeLink from './TypeLink';
+import { typeExists, isCoreType } from '../data';
 import styles from './Inspector.css';
 import { TypeType } from '../types';
 
-const Link = (props) => <span className={styles.inspectorLink}>{props.children}</span>;
-
-const interactiveLabel = (props) => {
+const interactiveLabel = (props: { isKey: boolean; keypath: string; value: string }) => {
   const { keypath, value, isKey } = props;
   const pathParts = keypath.split('.');
   const lastPart = pathParts[pathParts.length - 1];
+  const hasLink = lastPart === 'type' && !isKey && value && typeExists(value);
 
-  console.log(props);
-  console.log(keypath);
-  console.log(lastPart);
-  console.log('----');
+  if (!hasLink) return '';
 
-  if (lastPart === 'type' && !isKey) {
-    return <Link>{value}</Link>;
-  }
-
-  return '';
+  const isExternalLink = isCoreType(value);
+  return (
+    <TypeLink typeName={value} isExternalLink={isExternalLink} className={styles.link}>
+      {value}
+      {isExternalLink && <MdOpenInNew className={styles.linkIcon} />}
+    </TypeLink>
+  );
 };
 
-interface Props {
-  type: TypeType;
-}
-
-const Inspector = (props: Props) => {
+const Inspector = (props: { type: TypeType }) => {
   const { type } = props;
 
   return (
