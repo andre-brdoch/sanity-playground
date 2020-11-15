@@ -31,9 +31,11 @@ const Tool = ({ title = 'Schema Inspector', router }: Props) => {
       </header>
 
       <main>
-        {groups.map((group: TypeGroupType) => (
-          <TypeGroup key={group.groupType} {...group} />
-        ))}
+        <div className={styles.row}>
+          {groups.map((group: TypeGroupType) => (
+            <TypeGroup key={group.groupType} {...group} />
+          ))}
+        </div>
 
         {selectedType && (
           <FullScreenDialog title={typeName} onClose={closeDialog}>

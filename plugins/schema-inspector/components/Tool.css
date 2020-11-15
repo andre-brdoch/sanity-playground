@@ -1,0 +1,35 @@
+@import 'part:@sanity/base/theme/variables-style';
+@import 'part:@sanity/base/theme/variables/selectable-item-style';
+
+.container {
+  background: white;
+  padding: var(--medium-padding);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: var(--medium-padding);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link {
+  color: inherit;
+  text-decoration: inherit;
+  display: block;
+  padding: var(--small-padding);
+  border-radius: var(--border-radius-small);
+
+  @nest &:hover {
+    background: var(--selectable-item-color-hover);
+  }
+  @nest &:active {
+    background: var(--selected-item-color);
+    color: white;
+  }
+}

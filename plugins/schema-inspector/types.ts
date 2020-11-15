@@ -1,6 +1,10 @@
+import { ReactNode } from 'react';
+
 export interface TypeType {
   name: string;
   type: string;
+  title?: string;
+  icon?: ReactNode;
 }
 
 export interface TypeGroupType {
