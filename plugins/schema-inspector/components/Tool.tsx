@@ -41,7 +41,7 @@ const Tool = ({ title = 'Schema Inspector', router }: Props) => {
           </div>
 
           {selectedType && (
-            <FullScreenDialog title={typeName} onClose={closeDialog}>
+            <FullScreenDialog title={typeName} onClose={closeDialog} onClickOutside={closeDialog}>
               <Inspector type={selectedType} />
             </FullScreenDialog>
           )}
