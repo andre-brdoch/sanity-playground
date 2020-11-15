@@ -1,0 +1,23 @@
+@import 'part:@sanity/base/theme/variables-style';
+
+.jsonInspectorContainer {
+  composes: jsonInspectorContainer from '@sanity/desk-tool/lib/panes/documentPane/inspectDialog/inspectDialog.css';
+
+  @nest & :global .json-inspector__key, & :global .json-inspector__value {
+    position: relative;
+  }
+
+  @nest & .inspectorLink {
+    color: var(--link-color);
+    text-decoration: underline;
+    cursor: pointer;
+
+    /* overlay original node */
+    position: absolute;
+    left: 0;
+
+    @nest &:hover {
+      color: var(--link-hover-color);
+    }
+  }
+}
