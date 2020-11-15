@@ -39,9 +39,9 @@ const TypeGroup = (props: TypeGroupType) => {
 
   return (
     types?.length > 0 && (
-      <div>
-        <header>
-          <h2>{title}</h2>
+      <div className={styles.col}>
+        <header className={styles.colHeader}>
+          <h3 className={styles.colTitle}>{title}</h3>
         </header>
 
         <ul className={styles.list}>
