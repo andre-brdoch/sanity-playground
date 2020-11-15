@@ -9,6 +9,9 @@ import { TypeType } from '../types';
 
 const Inspector = (props: { type: TypeType }) => {
   const { type } = props;
+  const typeClean = { ...type };
+  // do not print full icon function
+  if (type?.icon?.name) typeClean.icon = type.icon.name;
   const [snackbarMsg, setSnackbarMsg] = React.useState(null);
 
   const copy = (text: string) => {
@@ -58,10 +61,14 @@ const Inspector = (props: { type: TypeType }) => {
   };
 
   return (
-    type && (
+    typeClean && (
       <div className={styles.jsonInspectorContainer}>
         {/* too: make isExpanded configurable */}
-        <ReactInspector data={type} isExpanded={() => true} interactiveLabel={interactiveLabel} />
+        <ReactInspector
+          data={typeClean}
+          isExpanded={() => true}
+          interactiveLabel={interactiveLabel}
+        />
 
         {snackbarMsg && (
           <Snackbar
