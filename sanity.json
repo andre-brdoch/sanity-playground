@@ -15,6 +15,9 @@
     "@sanity/desk-tool",
     "schema-inspector"
   ],
+  "server": {
+    "port": 3000
+  },
   "env": {
     "development": {
       "plugins": ["@sanity/vision"]

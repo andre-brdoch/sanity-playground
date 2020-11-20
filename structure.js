@@ -27,4 +27,6 @@ export default () => S.list()
             return params.type === 'article';
           }),
       ),
+
+    S.documentTypeListItem('groqTest'),
   ]);
