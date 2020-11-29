@@ -1,9 +1,9 @@
 import * as React from 'react';
 import ReactInspector from 'react-json-inspector';
-import { MdOpenInNew, MdContentCopy, MdFileDownload } from 'react-icons/md';
 import Snackbar from 'part:@sanity/components/snackbar/default';
-import Button from 'part:@sanity/components/buttons/anchor';
+import { MdOpenInNew, MdContentCopy } from 'react-icons/md';
 import TypeLink from './TypeLink';
+import DownloadButton from './DownloadButton';
 import { typeExists, isCoreType } from '../data';
 import styles from './styles.css';
 import { TypeType } from '../types';
@@ -61,30 +61,10 @@ const Inspector = (props: { type: TypeType }) => {
     return '';
   };
 
-  const DownloadButton = () => {
-    const json = JSON.stringify(type, null, 2);
-    const data = `text/json;charset=utf-8,${encodeURIComponent(json)}`;
-    const href = `data:'${data}'`;
-    const name = `${type.name}-schema.json`;
-
-    return (
-      <Button
-        href={href}
-        download={name}
-        className={styles.downloadButton}
-        color="primary"
-        size="small"
-        icon={MdFileDownload}
-      >
-        Download JSON
-      </Button>
-    );
-  };
-
   return (
     typeClean && (
       <div className={styles.inspectorContainer}>
-        <DownloadButton />
+        <DownloadButton type={type} />
 
         {/* too: make isExpanded configurable */}
         <ReactInspector
