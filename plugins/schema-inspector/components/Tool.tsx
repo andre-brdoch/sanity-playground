@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StateLink, withRouterHOC } from 'part:@sanity/base/router';
+import { withRouterHOC } from 'part:@sanity/base/router';
 import FullScreenDialog from 'part:@sanity/components/dialogs/fullscreen';
+import DownloadButton from './DownloadButton';
 import Inspector from './Inspector';
 import TypeGroup from './TypeGroup';
 import { groups, getType } from '../data';
-import { TypeType, TypeGroupType } from '../types';
+import { TypeGroupType } from '../types';
 import styles from './styles.css';
 
 interface Props {
@@ -42,6 +43,7 @@ const Tool = ({ title = 'Schema Inspector', router }: Props) => {
 
           {selectedType && (
             <FullScreenDialog title={typeName} onClose={closeDialog} onClickOutside={closeDialog}>
+              <DownloadButton data={selectedType} name={selectedType.name} />
               <Inspector type={selectedType} />
             </FullScreenDialog>
           )}

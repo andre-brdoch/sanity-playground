@@ -3,7 +3,6 @@ import ReactInspector from 'react-json-inspector';
 import Snackbar from 'part:@sanity/components/snackbar/default';
 import { MdOpenInNew, MdContentCopy } from 'react-icons/md';
 import TypeLink from './TypeLink';
-import DownloadButton from './DownloadButton';
 import { typeExists, isCoreType } from '../data';
 import styles from './styles.css';
 import { TypeType } from '../types';
@@ -64,8 +63,6 @@ const Inspector = (props: { type: TypeType }) => {
   return (
     typeClean && (
       <div className={styles.inspectorContainer}>
-        <DownloadButton type={type} />
-
         {/* too: make isExpanded configurable */}
         <ReactInspector
           data={typeClean}
