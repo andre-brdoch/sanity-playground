@@ -5,7 +5,7 @@ import Inspector from './Inspector';
 import TypeGroup from './TypeGroup';
 import { groups, getType } from '../data';
 import { TypeType, TypeGroupType } from '../types';
-import styles from './Tool.css';
+import styles from './styles.css';
 
 interface Props {
   title: string;

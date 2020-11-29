@@ -2,7 +2,7 @@ import * as React from 'react';
 import DefaultPreview from 'part:@sanity/components/previews/default';
 import TypeLink from './TypeLink';
 import { TypeType, TypeGroupType } from '../types';
-import styles from './Tool.css';
+import styles from './styles.css';
 
 const TypeGroup = (props: TypeGroupType) => {
   const { types, groupType, title } = props;

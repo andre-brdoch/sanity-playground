@@ -59,3 +59,47 @@
     color: white;
   }
 }
+
+.downloadButton {
+  margin-bottom: var(--medium-padding);
+}
+
+.inspectorContainer {
+  composes: jsonInspectorContainer from '@sanity/desk-tool/lib/panes/documentPane/inspectDialog/inspectDialog.css';
+
+  @nest & :global .json-inspector__key, & :global .json-inspector__value {
+    position: relative;
+  }
+
+  @nest & .interactiveLabel {
+    /* overlay original label */
+    position: absolute;
+    left: 0;
+    cursor: pointer;
+  }
+
+  @nest & .labelLink {
+    color: var(--state-info-color);
+    text-decoration: underline;
+
+    @nest &:hover {
+      color: var(--state-info-color--faded);
+    }
+  }
+
+  @nest & .copyLabel {
+    color: var(--state-success-color);
+
+    @nest &:hover {
+      color: var(--state-success-color--faded);
+    }
+  }
+
+  @nest & .labelIcon {
+    width: 11px;
+    position: absolute;
+    top: 0;
+    right: -2px;
+    transform: translateX(100%);
+  }
+}
