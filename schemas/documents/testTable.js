@@ -63,40 +63,68 @@ const Row = props => {
 
 const table = {
   name: 'table',
-  type: 'array',
-  options: {
-    editModal: 'fullscreen',
-  },
-  of: [
+  type: 'object',
+  // validation: Rule => Rule.custom((a, b, c) => {
+  //   console.log(a);
+  //   console.log(b);
+  //   console.log(c);
+  //   return true;
+  // }),
+  fields: [
     {
-      type: 'object',
-      name: 'row',
-      preview: {
-        select: { cells: 'cells' },
-        component: Row,
+      name: 'colAmount',
+      type: 'number',
+      validation: Rule => Rule.min(2)
+        .max(5)
+        .integer(),
+      title: 'How many columns should the table have?',
+      description: '2-5',
+    },
+    {
+      name: 'rows',
+      type: 'array',
+      validation: Rule => Rule.custom((val, context) => {
+        const { colAmount } = context.parent;
+        const isValid = val.every(row => row?.cells?.length === colAmount);
+        return isValid ? true : `Every row must have exactly ${colAmount} cells`;
+      }),
+      options: {
+        editModal: 'fullscreen',
       },
-      fields: [
+      of: [
         {
-          type: 'array',
-          options: {
-            layout: 'grid',
+          type: 'object',
+          name: 'row',
+          preview: {
+            select: { cells: 'cells' },
+            component: Row,
           },
-          name: 'cells',
-          of: [
+          fields: [
             {
-              type: 'object',
-              name: 'cell',
-              preview: {
-                select: { blocks: 'blocks' },
-                prepare: selection => ({
-                  media: () => <div>{toPlainText(selection.blocks)}</div>,
-                }),
+              type: 'array',
+              options: {
+                layout: 'grid',
+                editModal: 'fullscreen',
               },
-              fields: [
+              name: 'cells',
+              of: [
                 {
-                  name: 'blocks',
-                  type: 'array',
-                  of: [{ type: 'block' }],
+                  type: 'object',
+                  name: 'cell',
+                  description: 'For an empty cell, please insert an empty space',
+                  preview: {
+                    select: { blocks: 'blocks' },
+                    prepare: selection => ({
+                      media: () => <div>{toPlainText(selection.blocks)}</div>,
+                    }),
+                  },
+                  fields: [
+                    {
+                      name: 'blocks',
+                      type: 'array',
+                      of: [{ type: 'block' }],
+                    },
+                  ],
                 },
               ],
             },
