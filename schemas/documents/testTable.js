@@ -29,9 +29,10 @@ const Row = props => {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 1fr)',
         gridGap: '1rem',
-        alignItems: 'center',
+        alignItems: 'stretch',
         height: '100%',
-        minHeight: '40px',
+        minHeight: '36px',
+        margin: '3px',
       }}
     >
       {cells?.length ? (
@@ -48,6 +49,8 @@ const Row = props => {
                 borderRadius: '2px',
                 padding: '0.25rem 3px',
                 fontSize: '0.8em',
+                display: 'grid',
+                alignItems: 'center',
               }}
             >
               {text}
