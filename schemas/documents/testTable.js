@@ -20,7 +20,7 @@ function toPlainText(blocks = []) {
 }
 
 const Row = props => {
-  const { value, doNotTrim } = props;
+  const { value, doNotTrim, isHeader } = props;
   const { cells } = value;
   console.log(props);
 
@@ -34,6 +34,7 @@ const Row = props => {
         height: '100%',
         minHeight: '36px',
         margin: '3px',
+        fontWeight: isHeader ? 'bold' : 'normal',
       }}
     >
       {cells?.length ? (
@@ -76,9 +77,9 @@ const Table = props => {
   return (
     <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: '0.25rem' }}>
       {rows?.length
-        && rows.map(row => {
+        && rows.map((row, i) => {
           const value = { cells: row.cells };
-          return <Row value={value} doNotTrim />;
+          return <Row value={value} doNotTrim isHeader={i === 0} />;
         })}
     </div>
   );
