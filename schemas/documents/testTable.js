@@ -28,7 +28,7 @@ const Row = props => {
       style={{
         display: 'grid',
         gridTemplateColumns: `repeat(${cells?.length}, 1fr)`,
-        gridGap: '1rem',
+        gridGap: '0.25rem',
         alignItems: 'stretch',
         height: '100%',
         minHeight: '36px',
@@ -64,6 +64,21 @@ const Row = props => {
   );
 };
 
+const Table = props => {
+  console.log(props);
+  const rows = props.value?.rows;
+
+  return (
+    <div style={{ display: 'grid', gridAutoFlow: 'row', gridGap: '0.25rem' }}>
+      {rows?.length
+        && rows.map(row => {
+          const value = { cells: row.cells };
+          return <Row value={value} />;
+        })}
+    </div>
+  );
+};
+
 const table = {
   name: 'table',
   type: 'object',
@@ -82,6 +97,7 @@ const table = {
       type: 'array',
       validation: Rule => Rule.custom((val, context) => {
         const { colAmount } = context.parent;
+        if (colAmount == null) return 'You must set the column amount!';
         const isValid = val.every(row => row?.cells?.length === colAmount);
         return isValid ? true : `Every row must have exactly ${colAmount} cells`;
       }),
@@ -130,6 +146,10 @@ const table = {
       ],
     },
   ],
+  preview: {
+    select: { rows: 'rows' },
+    component: Table,
+  },
 };
 
 export default {
@@ -137,5 +157,14 @@ export default {
   name: 'testTable',
   title: 'Table',
   icon: () => <h2>T</h2>,
-  fields: [table, { name: 'title', type: 'string' }],
+  fields: [
+    {
+      name: 'body',
+      type: 'array',
+      options: { editModal: 'fullscreen' },
+      of: [{ type: 'block' }, table],
+    },
+    table,
+    { name: 'title', type: 'string' },
+  ],
 };
