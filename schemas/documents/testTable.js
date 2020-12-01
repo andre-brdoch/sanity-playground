@@ -21,13 +21,13 @@ function toPlainText(blocks = []) {
 
 const Row = props => {
   const { cells } = props.value;
-  console.log(cells);
+  console.log(props);
 
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: `repeat(${cells?.length}, 1fr)`,
         gridGap: '1rem',
         alignItems: 'stretch',
         height: '100%',
@@ -67,12 +67,6 @@ const Row = props => {
 const table = {
   name: 'table',
   type: 'object',
-  // validation: Rule => Rule.custom((a, b, c) => {
-  //   console.log(a);
-  //   console.log(b);
-  //   console.log(c);
-  //   return true;
-  // }),
   fields: [
     {
       name: 'colAmount',
