@@ -1,10 +1,10 @@
-import { BiFolderOpen } from 'react-icons/bi';
+import { BiSmile } from 'react-icons/bi';
 
 export default {
   type: 'document',
-  name: 'category',
-  title: 'Category',
-  icon: BiFolderOpen,
+  name: 'person',
+  title: 'Person',
+  icon: BiSmile,
   fields: [
     { type: 'string', name: 'kind' },
     {

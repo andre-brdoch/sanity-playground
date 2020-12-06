@@ -1,10 +1,10 @@
-import { BiFolderOpen } from 'react-icons/bi';
+import { BiQuestionMark } from 'react-icons/bi';
 
 export default {
   type: 'document',
-  name: 'category',
-  title: 'Category',
-  icon: BiFolderOpen,
+  name: 'faq',
+  title: 'FAQ',
+  icon: BiQuestionMark,
   fields: [
     { type: 'string', name: 'kind' },
     {

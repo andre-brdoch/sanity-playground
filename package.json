@@ -17,6 +17,7 @@
     "sanity"
   ],
   "dependencies": {
+    "@andre-brdoch/sanity-plugin-schema-inspector": "^1.0.1",
     "@sanity/base": "^2.0.9",
     "@sanity/components": "^2.0.9",
     "@sanity/core": "^2.0.9",
